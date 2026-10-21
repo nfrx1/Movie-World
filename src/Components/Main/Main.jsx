@@ -8,8 +8,9 @@ const Main = () => {
   const [movieId, setMovieId] = useState(null);
   const [tap, setTap] = useState("Discover");
   const [genreId, setGenreId] = useState(null);
+
   return (
-    <div className="flex min-h-screen w-full overflow-x-hidden">
+    <div className="flex min-h-screen w-full">
       <Aside
         setTap={setTap}
         tap={tap}
@@ -18,9 +19,8 @@ const Main = () => {
         genreId={genreId}
       />
       {movieId == null ? (
-        <div className="flex flex-col gap-1 md:gap-4 w-full">
+        <div className="flex flex-col gap-1 md:gap-4 w-full min-w-0">
           <MovieHeader
-            className="flex-1"
             setMovieId={setMovieId}
             tap={tap}
             genreId={genreId}
@@ -34,7 +34,7 @@ const Main = () => {
           />
         </div>
       ) : (
-        <MovieDetails setMovieId={setMovieId} movieId={movieId}></MovieDetails>
+        <MovieDetails setMovieId={setMovieId} movieId={movieId} />
       )}
     </div>
   );
