@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "motion/react";
 
 const MovieCard = ({ children, img, movieId, setMovieId }) => {
@@ -9,10 +9,11 @@ const MovieCard = ({ children, img, movieId, setMovieId }) => {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileHover={{
-        y: -20,
+        y: -10,
         boxShadow:
           "0px 20px 25px -5px rgba(0, 0, 0, 0.3), 0px 10px 10px -5px rgba(0, 0, 0, 0.2)",
       }}
+      whileTap={{ scale: 0.96 }}
       whileInView={{
         opacity: 1,
         y: 0,
@@ -23,14 +24,14 @@ const MovieCard = ({ children, img, movieId, setMovieId }) => {
           damping: 50,
         },
       }}
-      viewport={{ amount: 0.05, once: true}}
-      className="card bg-base-300 w-32 md:w-48"
+      viewport={{ amount: 0.05, once: true }}
+      className="card bg-base-300 w-full sm:w-44 md:w-48 shadow-xl cursor-pointer overflow-hidden"
       onClick={() => {
-        setMovieId(movieId)
-        window.scrollTo(0, 0)
+        setMovieId(movieId);
+        window.scrollTo({ top: 0, behavior: "smooth" });
       }}
     >
-      <figure className="aspect-2/3 bg-neutral/10 flex items-center justify-center">
+      <figure className="aspect-2/3 bg-neutral/10 flex items-center justify-center w-full">
         {showImage ? (
           <img
             src={`https://image.tmdb.org/t/p/w342${img}`}
@@ -45,8 +46,10 @@ const MovieCard = ({ children, img, movieId, setMovieId }) => {
           </span>
         )}
       </figure>
-      <div className="card-body">
-        <h3 className="card-title text-[12px] md:text-lg">{children}</h3>
+      <div className="card-body p-3 md:p-4">
+        <h3 className="card-title text-xs sm:text-sm md:text-base line-clamp-2 leading-snug">
+          {children}
+        </h3>
       </div>
     </motion.div>
   );

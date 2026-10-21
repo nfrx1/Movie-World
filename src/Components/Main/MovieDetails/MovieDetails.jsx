@@ -1,5 +1,5 @@
 import { MoveLeft } from "lucide-react";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import MovieRecommendations from "./MovieRecommendations";
 
 const MovieDetails = ({ movieId, setMovieId }) => {
@@ -49,75 +49,81 @@ const MovieDetails = ({ movieId, setMovieId }) => {
 
     return () => controller.abort();
   }, [movieId]);
-  if (loading) return <div className="p-4 text-center">Loading...</div>;
+
+  if (loading) return <div className="p-4 text-center w-full">Loading...</div>;
   if (error)
-    return <div className="p-4 text-center text-error">Error: {error}</div>;
+    return <div className="p-4 text-center text-error w-full">Error: {error}</div>;
+
   return (
-    <div className="p-4 flex flex-col gap-4 mb-24 md:mb-8 w-full">
+    <div className="p-3 sm:p-4 md:p-6 flex flex-col gap-4 pb-28 md:pb-8 w-full overflow-x-hidden">
       <button
-        className="btn btn-dash btn-accent w-fit"
+        className="btn btn-dash btn-accent btn-sm md:btn-md w-fit"
         onClick={() => setMovieId(null)}
       >
-        <MoveLeft /> Go Back
+        <MoveLeft className="w-4 h-4 md:w-5 md:h-5" /> Go Back
       </button>
-      <div className="card lg:card-side w-full bg-base-300">
-        <figure className="w-full lg:w-72 shrink-0 overflow-hidden rounded-l-box">
+
+      <div className="card lg:card-side w-full bg-base-300 overflow-hidden">
+        <figure className="w-full sm:w-64 lg:w-72 mx-auto lg:mx-0 shrink-0 overflow-hidden rounded-t-box lg:rounded-l-box lg:rounded-tr-none">
           <img
             src={
-              movieInfo
+              movieInfo?.poster_path
                 ? `https://image.tmdb.org/t/p/w500/${movieInfo.poster_path}`
                 : null
             }
-            alt={movieInfo ? movieInfo.title : null}
-            className="aspect-2/3 w-full h-full"
+            alt={movieInfo ? movieInfo.title : ""}
+            className="aspect-2/3 w-full h-full object-cover"
           />
         </figure>
-        <div className="card-body">
-          <h2 className="card-title">{movieInfo ? movieInfo.title : null}</h2>
-          <p className="flex-0">{movieInfo ? movieInfo.overview : null}</p>
-          <div className="card-actions gap-4 mt-4">
-            <div className="flex md:w-96 flex-wrap gap-4">
-              {movieInfo
-                ? movieInfo.genres.map((e) => (
-                    <div
-                      className="badge badge-dash badge-secondary"
-                      key={e.id}
-                    >
-                      {e.name}
-                    </div>
-                  ))
-                : null}
+        <div className="card-body p-4 sm:p-6">
+          <h2 className="card-title text-lg sm:text-xl md:text-2xl">
+            {movieInfo?.title}
+          </h2>
+          <p className="text-sm sm:text-base leading-relaxed opacity-90">
+            {movieInfo?.overview}
+          </p>
+          <div className="card-actions flex-col gap-4 mt-4 w-full">
+            <div className="flex flex-wrap gap-2">
+              {movieInfo?.genres?.map((e) => (
+                <div
+                  className="badge badge-dash badge-secondary badge-sm sm:badge-md"
+                  key={e.id}
+                >
+                  {e.name}
+                </div>
+              ))}
             </div>
-            <div className="gap-2 stats stats-vertical lg:stats-horizontal shadow w-full">
-              <div className="stat place-items-center grid-flow-row">
-                <div className="stat-title">Status</div>
-                <div className="stat-value text-secondary">
-                  {movieInfo ? movieInfo.status : null}
+            <div className="stats stats-vertical sm:stats-horizontal shadow bg-base-200 w-full">
+              <div className="stat place-items-center py-3">
+                <div className="stat-title text-xs">Status</div>
+                <div className="stat-value text-lg sm:text-2xl text-secondary">
+                  {movieInfo?.status}
                 </div>
-                <div className="stat-desc">Realeased or not</div>
+                <div className="stat-desc text-xs">Released or not</div>
               </div>
-              <div className="stat place-items-center">
-                <div className="stat-title">Vote average</div>
-                <div className="stat-value">
-                  {movieInfo ? movieInfo.vote_average : null}
+              <div className="stat place-items-center py-3">
+                <div className="stat-title text-xs">Vote average</div>
+                <div className="stat-value text-lg sm:text-2xl">
+                  {movieInfo?.vote_average?.toFixed(1)}
                 </div>
-                <div className="stat-desc">
-                  {movieInfo ? movieInfo.vote_count : null} voted
+                <div className="stat-desc text-xs">
+                  {movieInfo?.vote_count} voted
                 </div>
               </div>
-              <div className="stat place-items-center">
-                <div className="stat-title">Original language</div>
-                <div className="stat-value">
-                  {movieInfo ? movieInfo.original_language.toUpperCase() : null}
+              <div className="stat place-items-center py-3">
+                <div className="stat-title text-xs">Language</div>
+                <div className="stat-value text-lg sm:text-2xl">
+                  {movieInfo?.original_language?.toUpperCase()}
                 </div>
-                <div className="stat-desc">Tne language used</div>
+                <div className="stat-desc text-xs">Original language</div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div className="flex w-full justify-center mt-12 mb-4">
-        <h2 className="text-2xl tracking-tight font-semibold">
+
+      <div className="flex w-full justify-center mt-6 md:mt-12 mb-2">
+        <h2 className="text-xl md:text-2xl tracking-tight font-semibold">
           Recommendations
         </h2>
       </div>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import Aside from "./Aside/Aside";
 import MovieHeader from "./Movies/MovieHeader";
 import Movies from "./Movies/Movies";
@@ -9,7 +9,7 @@ const Main = () => {
   const [tap, setTap] = useState("Discover");
   const [genreId, setGenreId] = useState(null);
   return (
-    <div className="flex">
+    <div className="flex min-h-screen w-full overflow-x-hidden">
       <Aside
         setTap={setTap}
         tap={tap}

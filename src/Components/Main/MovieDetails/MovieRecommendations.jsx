@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import MovieCard from "../Movies/MovieCard";
 
 const MovieRecommendations = ({ movieId, setMovieId }) => {
@@ -48,25 +48,23 @@ const MovieRecommendations = ({ movieId, setMovieId }) => {
 
     return () => controller.abort();
   }, [movieId]);
+
   if (loading) return <div className="p-4 text-center">Loading...</div>;
   if (error)
     return <div className="p-4 text-center text-error">Error: {error}</div>;
+
   return (
-    <div className="flex flex-wrap gap-1 justify-center md:gap-8">
-      {movieRecommendations
-        ? movieRecommendations.map((e) => {
-            return (
-              <MovieCard
-                img={e.poster_path}
-                setMovieId={setMovieId}
-                movieId={e.id}
-                key={e.id}
-              >
-                {e.title}
-              </MovieCard>
-            );
-          })
-        : null}
+    <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-3 sm:gap-5 md:gap-8 justify-center w-full">
+      {movieRecommendations?.map((e) => (
+        <MovieCard
+          img={e.poster_path}
+          setMovieId={setMovieId}
+          movieId={e.id}
+          key={e.id}
+        >
+          {e.title}
+        </MovieCard>
+      ))}
     </div>
   );
 };
